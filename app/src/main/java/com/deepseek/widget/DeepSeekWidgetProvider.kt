@@ -124,7 +124,7 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
                 // 错误状态
                 views.setTextViewText(R.id.text_balance, "⚠️")
                 views.setTextViewText(R.id.text_usage, "获取失败")
-                views.setTextViewText(R.id.text_cost, data.error.take(30))
+                views.setTextViewText(R.id.text_quota, data.error.take(30))
                 views.setTextViewText(R.id.text_update_time, "点击重试")
                 views.setTextColor(R.id.text_status_indicator, context.getColor(R.color.widget_offline))
                 views.setTextViewText(R.id.text_status_label, "错误")
