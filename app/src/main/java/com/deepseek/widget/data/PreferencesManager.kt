@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
@@ -18,6 +19,7 @@ class PreferencesManager(private val context: Context) {
     companion object {
         private val KEY_API_KEY = stringPreferencesKey("api_key")
         private val KEY_UPDATE_INTERVAL = longPreferencesKey("update_interval_minutes")
+        private val KEY_NOTIFICATION_ENABLED = booleanPreferencesKey("notification_enabled")
         // 缓存余额和用量数据，离线时可显示最后已知值
         private val KEY_CACHED_BALANCE = stringPreferencesKey("cached_balance")
         private val KEY_CACHED_CURRENCY = stringPreferencesKey("cached_currency")
@@ -97,6 +99,22 @@ class PreferencesManager(private val context: Context) {
             } else {
                 prefs.remove(KEY_CACHED_ERROR)
             }
+        }
+    }
+
+    // ===== 通知栏开关 =====
+
+    /** 获取通知栏开关状态（同步，因为从 UI 线程调用） */
+    fun getNotificationEnabled(): Boolean {
+        return kotlinx.coroutines.runBlocking {
+            context.dataStore.data.first()[KEY_NOTIFICATION_ENABLED] ?: false
+        }
+    }
+
+    /** 设置通知栏开关 */
+    suspend fun setNotificationEnabled(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[KEY_NOTIFICATION_ENABLED] = enabled
         }
     }
 

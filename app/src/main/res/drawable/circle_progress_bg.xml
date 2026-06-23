@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 环形进度条的背景轨道 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="ring"
+    android:innerRadius="32dp"
+    android:thickness="6dp"
+    android:useLevel="false">
+    <solid android:color="#1A4F46E5" />
+</shape>

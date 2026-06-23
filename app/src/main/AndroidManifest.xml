@@ -11,21 +11,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DeepSeekWidget">
 
-        <!-- 配置/启动 Activity -->
+        <!-- 主界面（Dashboard） -->
         <activity
-            android:name=".DeepSeekWidgetConfigActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.DeepSeekWidget">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <!-- 设置页面 -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DeepSeekWidget"
+            android:parentActivityName=".MainActivity" />
+
+        <!-- 旧配置 Activity（保留兼容） -->
+        <activity
+            android:name=".DeepSeekWidgetConfigActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DeepSeekWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
 
-        <!-- 桌面 Widget Provider -->
+        <!-- 桌面 Widget Provider（保留，部分设备可能支持） -->
         <receiver
             android:name=".DeepSeekWidgetProvider"
             android:exported="true"
