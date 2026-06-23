@@ -3,7 +3,7 @@ name: Build APK
 on:
   push:
     branches: [ "main", "master" ]
-  workflow_dispatch:  # 也可以手动触发
+  workflow_dispatch:
 
 jobs:
   build:
@@ -21,14 +21,21 @@ jobs:
       - name: 设置 Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: 设置 Gradle 8.5
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: "8.5"
+          cache-read-only: false
+
       - name: 生成 Gradle Wrapper
         run: gradle wrapper --gradle-version=8.5
 
       - name: 构建 Debug APK
         run: ./gradlew assembleDebug --no-daemon
 
-      - name: 上传 APK
+      - name: 上传 APK 到 Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: DeepSeekWidget-Debug-APK
           path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
