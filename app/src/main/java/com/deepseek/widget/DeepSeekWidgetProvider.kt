@@ -101,8 +101,9 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
                 }
                 else -> {
                     views.setTextViewText(R.id.text_balance, "¥${data.balance}")
-                    views.setTextViewText(R.id.text_usage, formatToken(data.totalTokens))
-                    views.setTextViewText(R.id.text_quota, formatToken(data.totalTokens))
+                    val usageText = if (data.totalTokens < 0) "按量计费" else formatToken(data.totalTokens)
+                    views.setTextViewText(R.id.text_usage, usageText)
+                    views.setTextViewText(R.id.text_quota, if (data.totalTokens < 0) "" else formatToken(data.totalTokens))
                     val c = if (data.isAvailable) context.getColor(R.color.widget_online) else context.getColor(R.color.widget_offline)
                     views.setTextColor(R.id.text_status_indicator, c)
                     views.setTextViewText(R.id.text_status_label, if (data.isAvailable) "正常" else "受限")

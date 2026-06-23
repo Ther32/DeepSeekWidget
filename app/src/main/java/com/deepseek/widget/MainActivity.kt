@@ -127,10 +127,15 @@ class MainActivity : AppCompatActivity() {
             else getColor(R.color.widget_offline)
         )
 
-        // 用量
-        tvUsage.text = formatTokens2(data.totalTokens)
-        tvQuota.text = "已用"
-        progressUsage.progress = 0 // 没有总配额数据时不显示进度
+        // 用量（-1 表示按量计费无配额数据）
+        if (data.totalTokens < 0) {
+            tvUsage.text = "按量计费"
+            tvQuota.text = ""
+        } else {
+            tvUsage.text = formatTokens2(data.totalTokens)
+            tvQuota.text = "已用"
+        }
+        progressUsage.progress = 0
 
         // API 状态
         tvApiStatus.text = if (apiKey != null) "● 已配置" else "● 未配置"

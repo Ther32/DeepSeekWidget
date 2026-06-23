@@ -101,13 +101,10 @@ class DeepSeekApiClient(private val apiKey: String) {
             }
         )
 
-        // 获取用量/配额
+        // 获取用量/配额（仅配额制用户有数据，按量付费用户会失败或返回0）
         val usedTokens = getUsage().fold(
             onSuccess = { resp -> resp.usedTokens },
-            onFailure = { error ->
-                // 用量接口不是必须的，失败了不影响余额显示
-                0L
-            }
+            onFailure = { -1L } // -1 表示"不可用/按量计费"
         )
 
         return WidgetData(

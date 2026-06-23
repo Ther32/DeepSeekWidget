@@ -130,9 +130,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="none"
-                            android:text="1 小时"
-                            android:focusable="false"
-                            android:clickable="true" />
+                            android:text="1 小时" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
