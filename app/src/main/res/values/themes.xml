@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.DeepSeekWidget" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/deepseek_primary</item>
+        <item name="colorPrimaryVariant">@color/deepseek_primary_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">@color/deepseek_accent</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="android:statusBarColor">@color/deepseek_primary</item>
+    </style>
+</resources>

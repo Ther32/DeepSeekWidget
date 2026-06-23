@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="deepseek_primary">#4F46E5</color>
+    <color name="deepseek_primary_dark">#3730A3</color>
+    <color name="deepseek_accent">#06B6D4</color>
+
+    <!-- Widget colors -->
+    <color name="widget_bg">#FFFFFFFF</color>
+    <color name="widget_title">#1F2937</color>
+    <color name="widget_value">#111827</color>
+    <color name="widget_label">#4B5563</color>
+    <color name="widget_hint">#9CA3AF</color>
+    <color name="widget_divider">#E5E7EB</color>
+    <color name="widget_online">#10B981</color>
+    <color name="widget_offline">#EF4444</color>
+
+    <!-- Config screen -->
+    <color name="config_bg">#F3F4F6</color>
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#6B7280</color>
+</resources>
