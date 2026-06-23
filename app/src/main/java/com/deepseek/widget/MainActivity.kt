@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import com.deepseek.widget.data.DeepSeekApiClient
 import com.deepseek.widget.data.PreferencesManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -35,15 +34,6 @@ class MainActivity : AppCompatActivity() {
             refreshData()
         }
 
-        findViewById<SwitchMaterial>(R.id.switch_notification).setOnCheckedChangeListener { _, isChecked ->
-            prefsManager.setNotificationEnabled(isChecked)
-            if (isChecked) {
-                NotificationHelper.showNotification(this)
-            } else {
-                NotificationHelper.cancelNotification(this)
-            }
-        }
-
         // 加载缓存数据
         loadCachedData()
     }
@@ -58,12 +48,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val data = WidgetCache(this@MainActivity).read()
             val apiKey = prefsManager.getApiKey()
-
             updateUI(data, apiKey)
-
-            // 通知开关状态
-            findViewById<SwitchMaterial>(R.id.switch_notification).isChecked =
-                prefsManager.getNotificationEnabled()
         }
     }
 
@@ -90,11 +75,6 @@ class MainActivity : AppCompatActivity() {
             // 缓存并更新 UI
             WidgetCache(this@MainActivity).write(result)
             updateUI(result, apiKey)
-
-            // 如果通知开关开了，更新通知
-            if (prefsManager.getNotificationEnabled()) {
-                NotificationHelper.showNotification(this@MainActivity)
-            }
 
             if (result.error != null) {
                 Toast.makeText(this@MainActivity, "获取失败: ${result.error}", Toast.LENGTH_SHORT).show()

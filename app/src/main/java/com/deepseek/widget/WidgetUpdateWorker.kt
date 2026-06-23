@@ -85,11 +85,6 @@ class WidgetUpdateWorker(
             // 4. 更新 Widget（如果系统支持）
             DeepSeekWidgetProvider.updateAllWidgets(applicationContext, data)
 
-            // 5. 更新通知栏（如果已开启）
-            if (prefsManager.getNotificationEnabled()) {
-                NotificationHelper.showNotification(applicationContext)
-            }
-
             if (data.error == null) {
                 Log.d(TAG, "更新成功: 余额=¥${data.balance}, 用量=${data.totalTokens}")
                 Result.success()
