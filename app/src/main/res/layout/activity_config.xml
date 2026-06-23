@@ -68,7 +68,7 @@
             android:hint="@string/interval_label"
             app:boxStrokeColor="@color/deepseek_primary">
 
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/input_interval"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
