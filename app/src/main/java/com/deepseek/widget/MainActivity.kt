@@ -89,6 +89,7 @@ class MainActivity : AppCompatActivity() {
         val tvBalanceStatus = findViewById<android.widget.TextView>(R.id.tv_balance_status)
         val tvUsage = findViewById<android.widget.TextView>(R.id.tv_usage)
         val tvQuota = findViewById<android.widget.TextView>(R.id.tv_quota)
+        val tvCost = findViewById<android.widget.TextView>(R.id.tv_cost)
         val tvApiStatus = findViewById<android.widget.TextView>(R.id.tv_api_status)
         val tvUpdateTime = findViewById<android.widget.TextView>(R.id.tv_update_time)
         val progressUsage = findViewById<android.widget.ProgressBar>(R.id.progress_usage)
@@ -99,6 +100,7 @@ class MainActivity : AppCompatActivity() {
             tvBalanceStatus.setTextColor(getColor(R.color.widget_offline))
             tvUsage.text = "获取失败"
             tvQuota.text = ""
+            tvCost.text = ""
             tvApiStatus.text = "● 错误"
             tvApiStatus.setTextColor(getColor(R.color.widget_offline))
             tvUpdateTime.text = "点击刷新重试"
@@ -112,6 +114,7 @@ class MainActivity : AppCompatActivity() {
             tvBalanceStatus.setTextColor(getColor(R.color.widget_hint))
             tvUsage.text = "---"
             tvQuota.text = ""
+            tvCost.text = ""
             tvApiStatus.text = "● 未知"
             tvApiStatus.setTextColor(getColor(R.color.widget_hint))
             tvUpdateTime.text = "点击右下角刷新"
@@ -136,6 +139,9 @@ class MainActivity : AppCompatActivity() {
             tvQuota.text = "已用"
         }
         progressUsage.progress = 0
+
+        // 本月花费
+        tvCost.text = if (data.totalCost != "--") "¥${data.totalCost}" else "---"
 
         // API 状态
         tvApiStatus.text = if (apiKey != null) "● 已配置" else "● 未配置"

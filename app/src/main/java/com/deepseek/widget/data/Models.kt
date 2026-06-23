@@ -24,6 +24,25 @@ data class BalanceInfo(
 )
 
 /**
+ * OpenAI 兼容的计费用量响应
+ * GET https://api.deepseek.com/dashboard/billing/usage?start_date=...&end_date=...
+ * 返回指定时间范围内的总费用
+ */
+data class BillingUsageResponse(
+    @SerializedName("total_usage")
+    val totalUsage: Double = 0.0,
+    @SerializedName("data")
+    val dailyUsage: List<DailyUsage>? = null
+)
+
+data class DailyUsage(
+    @SerializedName("date")
+    val date: String = "",
+    @SerializedName("amount")
+    val amount: Double = 0.0
+)
+
+/**
  * DeepSeek API 用量/配额响应
  * GET https://api.deepseek.com/v1/usage
  * 返回当前配额周期内的用量统计
