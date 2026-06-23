@@ -24,36 +24,17 @@ data class BalanceInfo(
 )
 
 /**
- * DeepSeek API 用量响应
- * GET https://api.deepseek.com/user/usage?start_date=...&end_date=...
+ * DeepSeek API 用量/配额响应
+ * GET https://api.deepseek.com/v1/usage
+ * 返回当前配额周期内的用量统计
  */
 data class UsageResponse(
-    val data: List<UsageData>,
-    val total: UsageTotal?
-)
-
-data class UsageData(
-    val date: String,
-    @SerializedName("total_input_tokens")
-    val totalInputTokens: Long,
-    @SerializedName("total_output_tokens")
-    val totalOutputTokens: Long,
+    @SerializedName("used_tokens")
+    val usedTokens: Long = 0,
     @SerializedName("total_tokens")
-    val totalTokens: Long,
-    @SerializedName("total_cost")
-    val totalCost: String,
-    val currency: String
-)
-
-data class UsageTotal(
-    @SerializedName("total_input_tokens")
-    val totalInputTokens: Long,
-    @SerializedName("total_output_tokens")
-    val totalOutputTokens: Long,
-    @SerializedName("total_tokens")
-    val totalTokens: Long,
-    @SerializedName("total_cost")
-    val totalCost: String
+    val totalTokens: Long = 0,
+    @SerializedName("reset_at")
+    val resetAt: String? = null
 )
 
 /**

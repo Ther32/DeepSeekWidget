@@ -116,7 +116,7 @@ class WidgetUpdateWorker(
                 Log.d(TAG,
                     "更新成功: 余额=¥${widgetData.balance}, " +
                             "用量=${widgetData.totalTokens}, " +
-                            "花费=¥${widgetData.totalCost}")
+                            "用量=${widgetData.totalTokens}")
                 Result.success()
             } else {
                 Log.w(TAG, "API 返回错误: ${widgetData.error}")

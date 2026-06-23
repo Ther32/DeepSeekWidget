@@ -21,7 +21,7 @@
     <string name="widget_title">DeepSeek Monitor</string>
     <string name="balance_label">💰 余额</string>
     <string name="usage_label">📊 本月用量</string>
-    <string name="cost_label">💵 本月花费</string>
+    <string name="cost_label">📊 已用配额</string>
     <string name="tap_to_refresh">点击刷新 · 更新于: %s</string>
     <string name="loading">刷新中…</string>
     <string name="error_api">API 错误</string>

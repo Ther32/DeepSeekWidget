@@ -4,9 +4,6 @@ import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 /**
@@ -27,19 +24,16 @@ class DeepSeekApiClient(private val apiKey: String) {
 
     companion object {
         private const val BASE_URL = "https://api.deepseek.com"
-
-        /** 格式化日期用于 API 参数 */
-        private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
     }
 
     /**
      * 查询账户余额
-     * GET https://api.deepseek.com/balance
+     * GET https://api.deepseek.com/user/balance
      */
     fun getBalance(): Result<BalanceResponse> {
         return try {
             val request = Request.Builder()
-                .url("$BASE_URL/balance")
+                .url("$BASE_URL/user/balance")
                 .header("Authorization", "Bearer $apiKey")
                 .header("Accept", "application/json")
                 .build()
@@ -60,15 +54,14 @@ class DeepSeekApiClient(private val apiKey: String) {
     }
 
     /**
-     * 查询指定日期范围的用量
-     * GET https://api.deepseek.com/user/usage
-     * @param startDate 开始日期 yyyy-MM-dd
-     * @param endDate 结束日期 yyyy-MM-dd
+     * 查询 API 用量/配额
+     * GET https://api.deepseek.com/v1/usage
+     * 返回当前配额周期内的已用 tokens 和总配额
      */
-    fun getUsage(startDate: String, endDate: String): Result<UsageResponse> {
+    fun getUsage(): Result<UsageResponse> {
         return try {
             val request = Request.Builder()
-                .url("$BASE_URL/user/usage?start_date=$startDate&end_date=$endDate")
+                .url("$BASE_URL/v1/usage")
                 .header("Authorization", "Bearer $apiKey")
                 .header("Accept", "application/json")
                 .build()
@@ -80,27 +73,12 @@ class DeepSeekApiClient(private val apiKey: String) {
                         ApiException(response.code, body ?: "Empty response")
                     )
                 }
-                // DeepSeek 某些端点可能返回空 data，兼容处理
                 val usageResponse = gson.fromJson(body, UsageResponse::class.java)
                 Result.success(usageResponse)
             }
         } catch (e: Exception) {
             Result.failure(e)
         }
-    }
-
-    /**
-     * 查询当月的用量
-     */
-    fun getCurrentMonthUsage(): Result<UsageResponse> {
-        val now = Date()
-        val endDate = dateFormat.format(now)
-
-        val calendar = java.util.Calendar.getInstance()
-        calendar.set(java.util.Calendar.DAY_OF_MONTH, 1)
-        val startDate = dateFormat.format(calendar.time)
-
-        return getUsage(startDate, endDate)
     }
 
     /**
@@ -123,16 +101,12 @@ class DeepSeekApiClient(private val apiKey: String) {
             }
         )
 
-        // 获取月度用量
-        val (totalTokens, totalCost) = getCurrentMonthUsage().fold(
-            onSuccess = { resp ->
-                Pair(
-                    resp.total?.totalTokens ?: 0,
-                    resp.total?.totalCost ?: "--"
-                )
-            },
+        // 获取用量/配额
+        val usedTokens = getUsage().fold(
+            onSuccess = { resp -> resp.usedTokens },
             onFailure = { error ->
-                return WidgetData(error = "用量查询失败: ${error.message}")
+                // 用量接口不是必须的，失败了不影响余额显示
+                0L
             }
         )
 
@@ -140,8 +114,8 @@ class DeepSeekApiClient(private val apiKey: String) {
             balance = balanceStr,
             currency = currency,
             isAvailable = isAvailable,
-            totalTokens = totalTokens,
-            totalCost = totalCost,
+            totalTokens = usedTokens,
+            totalCost = "--",
             lastUpdateTime = System.currentTimeMillis()
         )
     }

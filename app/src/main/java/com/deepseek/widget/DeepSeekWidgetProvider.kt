@@ -98,7 +98,7 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.widget_layout)
             views.setTextViewText(R.id.text_balance, "刷新中…")
             views.setTextViewText(R.id.text_usage, "请稍候")
-            views.setTextViewText(R.id.text_cost, "")
+            views.setTextViewText(R.id.text_quota, "")
             views.setTextViewText(R.id.text_update_time, "⏳ 正在获取数据…")
             views.setTextColor(R.id.text_balance, context.getColor(R.color.widget_hint))
             appWidgetManager.updateAppWidget(id, views)
@@ -132,7 +132,8 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
                 // 正常数据
                 views.setTextViewText(R.id.text_balance, "¥${data.balance}")
                 views.setTextViewText(R.id.text_usage, formatTokens(data.totalTokens))
-                views.setTextViewText(R.id.text_cost, "¥${data.totalCost}")
+                val quotaText = if (data.totalTokens > 0) "${formatTokens(data.totalTokens)}" else "---"
+                views.setTextViewText(R.id.text_quota, quotaText)
 
                 val statusColor = if (data.isAvailable) {
                     context.getColor(R.color.widget_online)

@@ -103,7 +103,7 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <!-- 花费行 -->
+    <!-- 配额行（用量/总配额） -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,12 +114,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cost_label"
+            android:text="📊 已用配额"
             android:textColor="@color/widget_label"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/text_cost"
+            android:id="@+id/text_quota"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
